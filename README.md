@@ -6,13 +6,13 @@ Creates an environment available and scalable
 Set the variables below according to your needs:
 
 - region
-- ami
+- ami               -> inform ami for scaling
 - instance-type
 - keypair-name
 - instance-name
 - authorized-ssh-ip -> [ For security don´t set it in variable default. Instead inform on terraform plan command ]
 - asg-min
-- subnet_counts -> this value is uset to create subnets for diferents AZ´s and for asg-max and asg-desired
+- subnet_counts     -> this value is uset to create subnets for diferents AZ´s and for asg-max and asg-desired
 
 ## Example:
 
