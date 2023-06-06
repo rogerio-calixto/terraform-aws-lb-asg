@@ -3,7 +3,7 @@ variable "region" {
 }
 
 variable "ami" {
-  default = "ami-053b0d53c279acc90"
+  default = "ami-0eae0940d45f46876"
 }
 
 variable "instance-type" {
@@ -11,15 +11,19 @@ variable "instance-type" {
 }
 
 variable "keypair-name" {
-  default  = "devops-keypair"
+  default = "devops-keypair"
 }
 
 variable "subnet_counts" {
-  default  = 2
+  default = 3
+}
+
+variable "asg-min" {
+  default = 0
 }
 
 variable "instance-name" {
-  default  = "devops-portfolio-instance"
+  default = "portfolio-lb-asg"
 }
 
 variable "authorized-ssh-ip" {}

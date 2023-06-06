@@ -4,7 +4,7 @@ resource "aws_alb" "load_balancer" {
   load_balancer_type         = "application"
   internal                   = false
   enable_deletion_protection = false
-  subnets = module.network.public-subnet-ids
+  subnets                    = module.network.public-subnet-ids
 
   depends_on = [
     aws_security_group.sg-lb

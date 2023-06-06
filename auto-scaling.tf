@@ -1,8 +1,8 @@
 resource "aws_launch_configuration" "lc" {
-  image_id      = var.ami
-  instance_type = var.instance-type
-  security_groups = [aws_security_group.sg.id]
-  key_name = var.keypair-name
+  image_id                    = var.ami
+  instance_type               = var.instance-type
+  security_groups             = [aws_security_group.sg.id]
+  key_name                    = var.keypair-name
   associate_public_ip_address = true
 
   # EBS root
@@ -19,12 +19,12 @@ resource "aws_launch_configuration" "lc" {
 }
 
 resource "aws_autoscaling_group" "scalegroup" {
-  name                 = "${var.project}-sg"
-  launch_configuration = aws_launch_configuration.lc.name
-  vpc_zone_identifier  = var.public-subnet_ids
-  min_size             = 0
-  max_size             = 2
-  desired_capacity          = 0
+  name                      = "${var.project}-sg"
+  launch_configuration      = aws_launch_configuration.lc.name
+  vpc_zone_identifier       = var.public-subnet_ids
+  min_size                  = var.asg-min
+  max_size                  = var.subnet_counts
+  desired_capacity          = var.subnet_counts
   force_delete              = true
   health_check_grace_period = 300
   health_check_type         = "ELB"

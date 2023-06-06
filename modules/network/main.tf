@@ -12,10 +12,10 @@ resource "aws_vpc" "main-vpc" {
 
 # public subnet
 resource "aws_subnet" "public-subnet" {
-  count             = var.subnet_counts
-  availability_zone = data.aws_availability_zones.available.names[count.index]
+  count                   = var.subnet_counts
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
   vpc_id                  = aws_vpc.main-vpc.id
-  cidr_block        = "10.0.${count.index + 1}.0/24"
+  cidr_block              = "10.0.${count.index + 1}.0/24"
   map_public_ip_on_launch = true
   tags = {
     Name    = "${var.project}-pub-${count.index + 1}"
@@ -67,7 +67,7 @@ resource "aws_route_table" "route-pub" {
 resource "aws_route_table_association" "rt-association-pub" {
   count          = var.subnet_counts
   route_table_id = aws_route_table.route-pub.id
-  subnet_id      = aws_subnet.public-subnet.*.id[count.index]  
+  subnet_id      = aws_subnet.public-subnet.*.id[count.index]
 }
 
 # private routing

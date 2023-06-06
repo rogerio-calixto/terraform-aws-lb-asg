@@ -19,7 +19,7 @@ resource "aws_security_group" "sg-lb" {
   }
 
   tags = {
-    Name        = "${var.project}-sg_lb"
+    Name = "${var.project}-sg_lb"
   }
 }
 
@@ -29,10 +29,10 @@ resource "aws_security_group" "sg" {
   description = "Libera entrada para LB"
 
   ingress {
-    description = "Porta HTTP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
+    description     = "Porta HTTP"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
     security_groups = ["${aws_security_group.sg-lb.id}"]
   }
 
@@ -44,6 +44,6 @@ resource "aws_security_group" "sg" {
   }
 
   tags = {
-    Name        = "${var.project}-sg"
+    Name = "${var.project}-sg"
   }
 }

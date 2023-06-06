@@ -11,24 +11,30 @@ Set the variables below according to your needs:
 - keypair-name
 - instance-name
 - authorized-ssh-ip -> [ For security don´t set it in variable default. Instead inform on terraform plan command ]
+- asg-min
+- subnet_counts -> this value is uset to create subnets for diferents AZ´s and for asg-max and asg-desired
 
 ## Example:
 
 - region            -> "us-east-1"
-- ami               -> "ami-0715c1897453cabd1"
+- ami               -> "ami-0eae0940d45f46876"
 - instance-type     -> "t3.micro"
 - keypair-name      -> "devops-keypair"
-- instance-name     -> "devops-portfolio-instance"
+- instance-name     -> "portfolio-lb-asg"
 - authorized-ssh-ip -> "123.456.789.100"
+- asg-min           -> 0
+- subnet_counts     -> 3
 
 # outputs
 
 Some key fields about infrastructure created will be returned:
 
 - instance_public_ip
-- main-sg-id
-- private-avaiable_zone
+- sg-id
+- sg_lb-id
+- avaiable_zones
 - private-subnet-ids [] -> list(string)
+- public-subnet-ids [] -> list(string)
 - vpc-id
 - load-balancer-dns
 
