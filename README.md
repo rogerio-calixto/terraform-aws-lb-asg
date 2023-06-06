@@ -20,7 +20,7 @@ Set the variables below according to your needs:
 - ami               -> "ami-0eae0940d45f46876"
 - instance-type     -> "t3.micro"
 - keypair-name      -> "devops-keypair"
-- instance-name     -> "portfolio-lb-asg"
+- instance-name     -> "portfolio"
 - authorized-ssh-ip -> "123.456.789.100"
 - asg-min           -> 0
 - subnet_counts     -> 3

@@ -1,5 +1,5 @@
 resource "aws_alb" "load_balancer" {
-  name                       = "${var.project}-lb"
+  name                       = "${local.project}-lb"
   security_groups            = ["${aws_security_group.sg-lb.id}"]
   load_balancer_type         = "application"
   internal                   = false
@@ -12,7 +12,7 @@ resource "aws_alb" "load_balancer" {
 }
 
 resource "aws_alb_target_group" "tg-load_balancer" {
-  name        = "${var.project}-tg-lb"
+  name        = "${local.project}-tg-lb"
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"

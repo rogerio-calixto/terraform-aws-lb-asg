@@ -1,9 +1,46 @@
+resource "aws_iam_role" "ec2_acess_s3_role" {
+  name = "${local.project}-EC2-Acesso-S3-Role"
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+  ]
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+
+resource "aws_iam_instance_profile" "ec2-profile" {
+  name = "${local.project}-ec2_profile"
+  role = aws_iam_role.ec2_acess_s3_role.name
+}
+
+data "template_file" "user_data" {
+  template = file("scripts/start_instance.sh")
+  vars = {
+    project = local.project
+  }
+}
+
+# aws_launch_configuration will be deprecated
+# Soon I will migrate to launch templates
 resource "aws_launch_configuration" "lc" {
   image_id                    = var.ami
   instance_type               = var.instance-type
   security_groups             = [aws_security_group.sg.id]
   key_name                    = var.keypair-name
   associate_public_ip_address = true
+  iam_instance_profile        = aws_iam_instance_profile.ec2-profile.name
+  user_data                   = data.template_file.user_data.rendered
 
   # EBS root
   root_block_device {
@@ -19,9 +56,9 @@ resource "aws_launch_configuration" "lc" {
 }
 
 resource "aws_autoscaling_group" "scalegroup" {
-  name                      = "${var.project}-sg"
+  name                      = "${local.project}"
   launch_configuration      = aws_launch_configuration.lc.name
-  vpc_zone_identifier       = var.public-subnet_ids
+  vpc_zone_identifier       = module.network.public-subnet-ids
   min_size                  = var.asg-min
   max_size                  = var.subnet_counts
   desired_capacity          = var.subnet_counts
@@ -44,7 +81,7 @@ resource "aws_autoscaling_group" "scalegroup" {
 
   tag {
     key                 = "Name"
-    value               = "${var.project}-sg"
+    value               = "${var.instance-name}"
     propagate_at_launch = true
   }
 

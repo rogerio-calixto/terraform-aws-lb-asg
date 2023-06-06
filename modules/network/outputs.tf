@@ -6,7 +6,7 @@ output "vpc-id" {
   value = aws_vpc.main-vpc.id
 }
 
-output "public-subnet_ids" {
+output "public-subnet-ids" {
   value = aws_subnet.public-subnet[*].id
 }
 

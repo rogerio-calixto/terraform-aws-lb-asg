@@ -4,6 +4,7 @@ data "aws_availability_zones" "available" {}
 resource "aws_vpc" "main-vpc" {
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "default"
+  enable_network_address_usage_metrics = true
 
   tags = {
     Name = "main-vpc"
@@ -83,6 +84,6 @@ resource "aws_route_table" "route-prv" {
 
 resource "aws_route_table_association" "rt-association-prv" {
   count          = var.subnet_counts
-  route_table_id = aws_route_table.rt-prv.id
+  route_table_id = aws_route_table.route-prv.id
   subnet_id      = aws_subnet.private-subnet.*.id[count.index]
 }

@@ -1,5 +1,5 @@
 resource "aws_security_group" "sg-lb" {
-  name        = "${var.project}-sg_lb"
+  name        = "${local.project}-sg_lb"
   vpc_id      = module.network.vpc-id
   description = "Libera entrada"
 
@@ -19,12 +19,12 @@ resource "aws_security_group" "sg-lb" {
   }
 
   tags = {
-    Name = "${var.project}-sg_lb"
+    Name = "${local.project}-sg_lb"
   }
 }
 
 resource "aws_security_group" "sg" {
-  name        = "${var.project}-sg"
+  name        = "${local.project}-sg"
   vpc_id      = module.network.vpc-id
   description = "Libera entrada para LB"
 
@@ -44,6 +44,6 @@ resource "aws_security_group" "sg" {
   }
 
   tags = {
-    Name = "${var.project}-sg"
+    Name = "${local.project}-sg"
   }
 }

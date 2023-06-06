@@ -23,7 +23,7 @@ variable "asg-min" {
 }
 
 variable "instance-name" {
-  default = "portfolio-lb-asg"
+  default = "portfolio"
 }
 
 variable "authorized-ssh-ip" {}
